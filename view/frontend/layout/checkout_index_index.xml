@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!-- @todo refactor script instead of puttin it in the very end -->
+        <referenceContainer name="before.body.end">
+            <block class="Magento\Framework\View\Element\Text" name="exampleScript">
+                <arguments>
+                    <argument name="text" xsi:type="string"><![CDATA[<script type="text/javascript" src="https://pick-ups.co.il/api/ups-pickups.sdk.js?r=1.2"></script>]]></argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="shipping-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="shippingAddress" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="shipping-address-fieldset" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="shipping_additional_info" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="string">120</item>
+                                                                </item><item name="shipping_ups_pickup_id" xsi:type="array">
+                                                                    <item name="sortOrder" xsi:type="string">125</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="shippingAdditional" xsi:type="array">
+                                                            <item name="component" xsi:type="string">uiComponent</item>
+                                                            <item name="displayArea" xsi:type="string">shippingAdditional</item>
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="additional_block" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">SR_UpsShip/js/view/checkout/shipping/ups-ship-block</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>
