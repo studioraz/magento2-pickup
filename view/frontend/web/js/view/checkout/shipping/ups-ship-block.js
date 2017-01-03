@@ -1,21 +1,43 @@
 define([
     'uiComponent',
     'ko',
-    'Magento_Checkout/js/model/quote'
-], function (Component, ko, quote) {
+    'Magento_Checkout/js/model/quote',
+    'jquery'
+], function (Component, ko, quote, jQuery) {
     'use strict';
     return Component.extend({
         defaults: {
             template: 'SR_UpsShip/checkout/shipping/ups-ship-block'
         },
+        hasPickerInitialized : false,
         isVisible: ko.observable(false),
+        hasInitialized : false,
+        carrierCode : 'ups_ship',
         initialize: function (options) {
-            var self = this;
+
             this.initConfig(options);
 
-            quote.shippingMethod.subscribe(function (data) {
-                self.isVisible(data.carrier_code == 'ups_ship');
-            });
+            quote.shippingMethod.subscribe(this._onShippingMethodChanged, this);
+
+            return this;
+        },
+
+        _onShippingMethodChanged : function(data) {
+
+            var isActive = data.carrier_code == this.carrierCode;
+
+            this.isVisible(isActive);
+
+            if (isActive && !this.hasPickerInitialized) {
+                this._initializePicker();
+            }
+        },
+
+
+        _initializePicker : function () {
+
+            // include UPS JS library
+            require(['pickups']);
 
             jQuery(document.body).on('pickups-before-open', function () {
                 var o = {
@@ -37,7 +59,8 @@ define([
                 jQuery("div.ups-pickups-info").css("line-height", "1em").css("font-weight", "300").css("font-size", "0.9em").html(html);
             });
 
-            return this;
+            this.hasPickerInitialized = true;
+
         }
     });
 });
