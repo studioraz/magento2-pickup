@@ -1,5 +1,5 @@
 {
-  "name" : "studioraz/magento2-ups-ship",
+  "name" : "studioraz/magento2-ups",
   "description" : "Magento 2 UPS SHIP integration.",
   "type" : "magento2-module",
   "license": [
