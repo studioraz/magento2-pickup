@@ -1,4 +1,5 @@
-<div data-bind="visible: isVisible">
-    <div onclick="window.PickupsSDK.onClick(); return;" class="ups-pickups ups-pickups-48"></div>
-    <div class="ups-pickups-info"></div>
+<div class="pickup-block" data-bind="visible: isVisible">
+    <div data-bind="click: showPickerPopup" class="pickups-picker ups-pickups ups-pickups-48"></div>
+    <div class="pickups-info" data-bind="html: locationHTML"></div>
+    <input type="hidden" name="ups_pickups_location" data-bind="value: hiddenValue" />
 </div>
