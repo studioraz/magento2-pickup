@@ -2,6 +2,6 @@
 use \Magento\Framework\Component\ComponentRegistrar;
 ComponentRegistrar::register(
     ComponentRegistrar::MODULE,
-    'SR_Ups',
+    'SR_UpsShip',
     __DIR__
 );
