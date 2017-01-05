@@ -20,7 +20,7 @@
                                                                     <item name="component" xsi:type="string">Magento_Ui/js/form/element/abstract</item>
                                                                     <item name="config" xsi:type="array">
                                                                         <item name="customScope" xsi:type="string">shippingAddress.custom_attributes</item>
-                                                                        <item name="template" xsi:type="string">ui/form/field</item>
+                                                                        <item name="template" xsi:type="string">SR_UpsShip/form/element/hidden</item>
                                                                         <item name="elementTmpl" xsi:type="string">ui/form/element/input</item>
                                                                     </item>
                                                                     <item name="provider" xsi:type="string">checkoutProvider</item>
@@ -31,7 +31,7 @@
                                                                     <item name="component" xsi:type="string">Magento_Ui/js/form/element/abstract</item>
                                                                     <item name="config" xsi:type="array">
                                                                         <item name="customScope" xsi:type="string">shippingAddress.custom_attributes</item>
-                                                                        <item name="template" xsi:type="string">ui/form/field</item>
+                                                                        <item name="template" xsi:type="string">SR_UpsShip/form/element/hidden</item>
                                                                         <item name="elementTmpl" xsi:type="string">ui/form/element/input</item>
                                                                     </item>
                                                                     <item name="provider" xsi:type="string">checkoutProvider</item>

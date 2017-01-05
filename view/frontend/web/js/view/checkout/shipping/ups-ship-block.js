@@ -29,6 +29,7 @@ define([
         hasPickerInitialized: false,
         hasInitialized: false,
         carrierCode: 'upsship',
+        location: null,
         initialize: function (options) {
 
             this.registry = registry;
@@ -38,7 +39,7 @@ define([
 
             this._super(options);
 
-            this.observe('isVisible locationHTML hiddenValue');
+            this.observe('isVisible locationHTML');
 
             return this;
 
@@ -55,8 +56,18 @@ define([
 
             this.isVisible(isActive);
 
-            if (isActive && !this.hasPickerInitialized) {
-                this._initializePicker();
+            if (isActive) {
+                if (!this.hasPickerInitialized) {
+                    this._initializePicker();
+                }
+                var location = this._getAdressValue('ups_location')
+                if (location) {
+                    this.location = JSON.parse(location);
+                    this._update();
+                }
+            }
+            else {
+                this._clear();
             }
         },
 
@@ -96,23 +107,33 @@ define([
 
             $(document.body).on('pickups-after-choosen', {component: this}, function (event, data) {
 
-
-                var location = event.originalEvent.detail;
-
                 var self = event.data.component;
 
-                var locationInfo = _.values(_.pick(location, 'title', 'street', 'city', 'zip', 'iid'));
+                self.location = event.originalEvent.detail;
 
-                self.locationHTML(locationInfo.join(', '));
-
-                // set location info to shipping form hidden fields
-                self._setAdressValue('ups_iid', location.iid)
-                    ._setAdressValue('ups_location', JSON.stringify(location));
-
+                self._update();
             });
 
             this.hasPickerInitialized = true;
 
+        },
+
+        _update: function () {
+
+            var compiled = _.template("<strong><%= title %> (<%= iid %>)</strong><br/><%= street %>,<%= city %><br/><%= zip %>");
+            var html = compiled(this.location);
+
+            this.locationHTML(html);
+
+            // set location info to shipping form hidden fields
+            this._setAdressValue('ups_iid', this.location.iid)
+                ._setAdressValue('ups_location', JSON.stringify(this.location));
+        },
+
+        _clear: function () {
+            this.locationHTML('');
+            this._setAdressValue('ups_iid', '')
+                ._setAdressValue('ups_location', '');
         }
     });
 });

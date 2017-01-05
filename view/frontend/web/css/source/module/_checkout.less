@@ -1,0 +1,55 @@
+//
+//  Variables
+//  _____________________________________________
+
+@block_background-color: @color-white-smoke;
+
+//
+//    Common
+//--------------------------------------
+& when (@media-common = true)  {
+
+  .pickup-block {
+    max-width:500px;
+    &:extend(.abs-add-clearfix all);
+  }
+
+  #pickups-picker {
+    float: left;
+  }
+
+  .pickups-picker {
+
+  }
+
+  .pickups-info {
+    //background-color: @block_background-color;
+    padding:10px;
+    float: left;
+    max-width:250px;
+    margin-left:10px;
+  }
+}
+
+//
+//    Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}
+
+//
+//    Mobile @screen__m 768px and under
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//    Mobile @screen__xs 480px and under
+//--------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+
+}
