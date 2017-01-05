@@ -1,5 +1,4 @@
 <div class="pickup-block" data-bind="visible: isVisible">
-    <div data-bind="click: showPickerPopup" class="pickups-picker ups-pickups ups-pickups-48"></div>
+    <div data-bind="click: showPickerPopup, clickBubble: false" id="pickups-picker" class="pickups-picker ups-pickups ups-pickups-48"></div>
     <div class="pickups-info" data-bind="html: locationHTML"></div>
-    <input type="hidden" name="ups_pickups_location" data-bind="value: hiddenValue" />
 </div>
