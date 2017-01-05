@@ -49,7 +49,7 @@ class ShippingInformationManagement
                 throw new InputException(__('Please select pickup location for this carrier'));
             }
             $shippingAddress
-                ->setShippingUpsPickupId($shippingUpsPickupId)
+                ->setShippingUpsPickupId(htmlspecialchars($shippingUpsPickupId))
                 ->setShippingAdditionalInformation($shippingAdditionalInformation)
                 ->save();
         }
