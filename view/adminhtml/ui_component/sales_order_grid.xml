@@ -8,7 +8,7 @@
                     <item name="config" xsi:type="array">
                         <item name="type" xsi:type="string">wblabels_order</item>
                         <item name="label" xsi:type="string" translate="true">Print WB Labels</item>
-                        <item name="url" xsi:type="url" path="upsship/wbLabels/export"/>
+                        <item name="url" xsi:type="url" path="upsship/order/wbLabels"/>
                     </item>
                 </argument>
             </action>

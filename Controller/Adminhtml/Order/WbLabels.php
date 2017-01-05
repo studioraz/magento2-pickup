@@ -4,7 +4,7 @@
  * For more information contact us at dev@studioraz.co.il
  * See COPYING_STUIDRAZ.txt for license details.
  */
-namespace SR\UpsShip\Controller\Adminhtml\WbLabels;
+namespace SR\UpsShip\Controller\Adminhtml\Order;
 
 use Magento\Framework\App\ResponseInterface;
 use Magento\Framework\App\Filesystem\DirectoryList;
@@ -16,10 +16,10 @@ use Magento\Ui\Component\MassAction\Filter;
 use SR\UpsShip\Model\Carrier\UpsShip;
 
 /**
- * Class Export
+ * Class WbLabels
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Export extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAction
+class WbLabels extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAction
 {
     /**
      * @var FileFactory
@@ -104,7 +104,11 @@ class Export extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassActio
                 ->joinLeft(
                     [$itemsTableAliasName => $collection->getTable('sales_order_item')],
                     "(main_table.entity_id = {$itemsTableAliasName}.order_id" .
-                    " AND {$itemsTableAliasName}.parent_item_id IS NULL)"
+                    " AND {$itemsTableAliasName}.parent_item_id IS NULL)",
+                    [
+                        'sum_weight' => 'SUM(o_i.weight * (qty_ordered - qty_canceled))',
+                        'sum_qty' => 'SUM(qty_ordered - qty_canceled)'
+                    ]
                 );
 
             $this->collection->getSelect()->group('main_table.entity_id');
@@ -131,8 +135,8 @@ class Export extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassActio
             $data['Orders'][$i]['ConsigneeAddress']['Email'] = $order->getEmail();
             $data['Orders'][$i]['PKP']= $order->getShippingAdditionalInformation();
             $data['Orders'][$i]['OrderID']= $order->getIncrementId();
-            $data['Orders'][$i]['Weight']=  $order->getSumWeight();
-            $data['Orders'][$i]['NumberOfPackages'] = $order->getSumQty();
+            $data['Orders'][$i]['Weight']= (float)$order->getSumWeight();
+            $data['Orders'][$i]['NumberOfPackages'] = (int)$order->getSumQty();
             $i++;
         }
 
