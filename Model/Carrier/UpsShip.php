@@ -1,15 +1,26 @@
 <?php
+/**
+ * Copyright © 2016 Studio Raz. All rights reserved.
+ * For more information contact us at dev@studioraz.co.il
+ * See COPYING_STUIDRAZ.txt for license details.
+ */
 namespace SR\UpsShip\Model\Carrier;
 
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Shipping\Model\Rate\Result;
 
+/**
+ * Class UpsShip
+ * @package SR\UpsShip\Model\Carrier
+ */
 class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     \Magento\Shipping\Model\Carrier\CarrierInterface
 {
-    protected $_code = 'ups_ship';
+    protected $_code = 'upsship';
     protected $_rateMethodFactory;
     protected $_rateResultFactory;
+    const UPS_SHIP_CARRIER_CODE = 'upsship';
+    const UPS_SHIP_PICKUP_METHOD_CODE = 'pickup';
 
     /**
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
@@ -37,7 +48,7 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      */
     public function getAllowedMethods()
     {
-        return [$this->_code => $this->getConfigData('name')];
+        return [self::UPS_SHIP_PICKUP_METHOD_CODE => 'Store pickup'];
     }
 
     /**
@@ -59,7 +70,7 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $method->setCarrier($this->_code);
         $method->setCarrierTitle($this->getConfigData('title'));
 
-        $method->setMethod($this->_code);
+        $method->setMethod(self::UPS_SHIP_PICKUP_METHOD_CODE);
         $method->setMethodTitle($this->getConfigData('name'));
 
         $price = $this->getConfigData('price');

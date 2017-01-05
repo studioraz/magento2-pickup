@@ -1,0 +1,14 @@
+<?php /** @var $block SR\UpsShip\Block\Adminhtml\Order\View\Ups */ ?>
+<?php if ($block->canShow()): ?>
+    <section class="admin__page-section">
+        <div class="admin__page-section-title">
+            <span class="title"><?php /* @escapeNotVerified */ echo __('UPS Additional Data') ?></span>
+        </div>
+        <div class="admin__page-section-content">
+            <div><?php echo __('Location ID'); ?>: <?php echo $block->getUpsLocationId(); ?></div>
+            <?php foreach ($block->getUpsLocationDetails() as $detailName => $detail): ?>
+                <div><?php echo ucfirst($detailName) . ': ' . $detail; ?></div>
+            <?php endforeach; ?>
+        </div>
+    </section>
+<?php endif; ?>

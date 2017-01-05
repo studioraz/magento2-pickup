@@ -28,7 +28,7 @@ define([
         },
         hasPickerInitialized: false,
         hasInitialized: false,
-        carrierCode: 'ups_ship',
+        carrierCode: 'upsship',
         initialize: function (options) {
 
             this.registry = registry;

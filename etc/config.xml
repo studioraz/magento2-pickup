@@ -2,7 +2,7 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
         <carriers>
-            <ups_ship>
+            <upsship>
                 <active>1</active>
                 <sallowspecific>0</sallowspecific>
                 <model>SR\UpsShip\Model\Carrier\UpsShip</model>
@@ -10,7 +10,7 @@
                 <price>15.00</price>
                 <title>Ups Ship</title>
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
-            </ups_ship>
+            </upsship>
         </carriers>
     </default>
 </config>
