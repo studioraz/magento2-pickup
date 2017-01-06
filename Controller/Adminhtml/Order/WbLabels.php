@@ -92,12 +92,12 @@ class WbLabels extends \Magento\Sales\Controller\Adminhtml\Order\AbstractMassAct
                     UpsShip::UPS_SHIP_CARRIER_CODE . '_' . UpsShip::UPS_SHIP_PICKUP_METHOD_CODE);
             ;
 
-            $shippingTableAliasName = 'shipping_o_a';
+            $billingTableAliasName = 'billing_o_a';
             $this->collection->getSelect()
                 ->joinLeft(
-                    [$shippingTableAliasName => $collection->getTable('sales_order_address')],
-                    "(main_table.entity_id = {$shippingTableAliasName}.parent_id" .
-                    " AND {$shippingTableAliasName}.address_type = 'shipping')"
+                    [$billingTableAliasName => $collection->getTable('sales_order_address')],
+                    "(main_table.entity_id = {$billingTableAliasName}.parent_id" .
+                    " AND {$billingTableAliasName}.address_type = 'billing')"
                 );
             $itemsTableAliasName = 'o_i';
             $this->collection->getSelect()
