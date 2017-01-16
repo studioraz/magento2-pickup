@@ -73,7 +73,10 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $method->setMethod(self::UPS_SHIP_PICKUP_METHOD_CODE);
         $method->setMethodTitle($this->getConfigData('name'));
 
-        $price = $this->getConfigData('price');
+        $freeShippingLimit = (int)$this->getConfigData('free_shipping_limit');
+        $price = ($freeShippingLimit > 0 && $request->getOrderSubtotal() >= $freeShippingLimit)
+            ? $this->getConfigData('price')
+            : 0;
 
         $method->setPrice($price);
         $method->setCost($price);

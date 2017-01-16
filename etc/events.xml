@@ -6,4 +6,7 @@
     <event name="sales_order_place_after">
         <observer name="ups_ship" instance="SR\UpsShip\Observer\SalesOrderPlaceAfter" />
     </event>
+    <event name="sales_order_shipment_save_after">
+        <observer name="ups_ship" instance="SR\UpsShip\Observer\SalesOrderShipmentSaveAfter" />
+    </event>
 </config>

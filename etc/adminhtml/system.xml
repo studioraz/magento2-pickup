@@ -21,6 +21,10 @@
                 <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Title</label>
                 </field>
+                <field id="free_shipping_limit" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Free Shipping Limit</label>
+                    <comment>Free Shipping if Subtotal > X. 0 - no Free Shipping available</comment>
+                </field>
                 <field id="showmethod" translate="label" type="select" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Show Method if Not Applicable</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
