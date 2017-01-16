@@ -39,6 +39,9 @@ class ShippingInformationManagement
     ) {
         $returnValue = $proceed($cartId, $addressInformation);
         $extAttributes = $addressInformation->getShippingAddress()->getExtensionAttributes();
+        if (!$extAttributes) {
+            return $returnValue;
+        }
         $shippingUpsPickupId = $extAttributes->getUpsIid();
         $shippingAdditionalInformation = $extAttributes->getUpsLocation();
         $quote = $this->quoteRepository->getActive($cartId);

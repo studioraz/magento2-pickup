@@ -11,4 +11,19 @@
         <plugin name="save_additional_shipping_to_quote" type="SR\UpsShip\Plugin\ShippingInformationManagement" sortOrder="10"/>
     </type>
     <preference for="Magento\Sales\Model\Order\Address" type="SR\UpsShip\Model\Order\Address"/>
+    <type name="SR\UpsShip\Logger\UpsShip">
+        <arguments>
+            <argument name="name" xsi:type="string">upsship_logger</argument>
+            <argument name="handlers"  xsi:type="array">
+                <item name="system" xsi:type="object">SR\UpsShip\Logger\Handler\UpsShip</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="InsertPickupsShipment" xsi:type="object">SR\UpsShip\Console\Command\InsertPickupsShipment</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

@@ -30,5 +30,35 @@
                 </field>
             </group>
         </section>
+        <section id="upsship" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>UpsShip Integration</label>
+            <tab>studioraz</tab>
+            <resource>SR_UpsShip::upsship</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+                <field id="is_live_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Is Live Mode</label>
+                    <config_path>upsship/general/is_live_mode</config_path>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <validate>validate-no-empty</validate>
+                </field>
+                <field id="service_domain_prefix_live" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Service Domain Prefix Live</label>
+                </field>
+                <field id="service_domain_prefix_dev" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Service Domain Prefix Live</label>
+                </field>
+                <field id="login" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Login</label>
+                </field>
+                <field id="password" translate="label" type="obscure" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Password</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="customer_number" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Customer Number</label>
+                </field>
+            </group>
+        </section>
     </system>
 </config>

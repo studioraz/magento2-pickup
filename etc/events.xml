@@ -3,4 +3,7 @@
     <event name="email_order_set_template_vars_before">
         <observer name="ups_ship" instance="SR\UpsShip\Observer\EmailOrderSetTemplateVarsBefore" />
     </event>
+    <event name="sales_order_place_after">
+        <observer name="ups_ship" instance="SR\UpsShip\Observer\SalesOrderPlaceAfter" />
+    </event>
 </config>
