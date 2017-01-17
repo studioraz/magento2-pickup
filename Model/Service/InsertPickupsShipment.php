@@ -69,9 +69,9 @@ class InsertPickupsShipment extends AbstractService
         }
 
         $data = [
-            'tracking_number' => isset($response->TrackingNumber)
-                ? $response->TrackingNumber
-                : '',
+            'tracking_numbers' => isset($response->TrackingNumber)
+                ? [$response->TrackingNumber]
+                : [],
             'error_message' =>  $errorMessage,
             'error_code' => $errorCode
         ];
