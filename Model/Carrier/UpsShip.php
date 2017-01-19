@@ -74,7 +74,7 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $method->setMethodTitle($this->getConfigData('name'));
 
         $freeShippingLimit = (int)$this->getConfigData('free_shipping_limit');
-        $price = ($freeShippingLimit > 0 && $request->getOrderSubtotal() >= $freeShippingLimit)
+        $price = ($freeShippingLimit > 0 && $request->getPackageValueWithDiscount() >= $freeShippingLimit)
             ? 0
             : $this->getConfigData('price');
 
