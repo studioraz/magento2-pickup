@@ -35,6 +35,10 @@ class InsertPickupsShipment extends AbstractService
         $data = [
             'info' => [
                 'NumberOfPackages' => 1,
+                'ConsigneeAddress' => [
+                    'ContactPerson' => $this->scopeConfig->getValue('general/store_information/name'),
+                    'Phone1' => $this->scopeConfig->getValue('general/store_information/phone')
+                ],
                 'PickupPointID' => $this->getEntity()->getShippingAddress()->getShippingUpsPickupId(),
                 'Reference1' => $this->getEntity()->getIncrementId(),
                 'UseDefaultShipperAddress' => 'true',
@@ -86,6 +90,6 @@ class InsertPickupsShipment extends AbstractService
      */
     protected function _getRequestMethodName()
     {
-        return 'TrackingNumber';
+        return 'InsertPickupsShipment';
     }
 }

@@ -68,6 +68,7 @@ abstract class AbstractService
     public function execute()
     {
         $response = [];
+        $client = null;
 
         if ($authCookie = $this->_login()) {
             try {
@@ -75,11 +76,13 @@ abstract class AbstractService
                 $client->__setCookie(self::AUTH_COOKIE_NAME, $authCookie);
                 $request = $this->_prepareRequest();
                 $response = $client->__soapCall($this->_getRequestMethodName(), [$request]);
-                $this->logger->info($client->__getLastRequest());
-                $this->logger->info($client->__getLastResponse());
             } catch(\Exception $e) {
                 $this->logger->info($e->getMessage());
                 $this->message->addError($e->getMessage());
+            }
+            if ($client) {
+                $this->logger->info($client->__getLastRequest());
+                $this->logger->info($client->__getLastResponse());
             }
         }
 
