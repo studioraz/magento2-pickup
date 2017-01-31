@@ -55,6 +55,19 @@
                                         </item>
                                     </item>
                                 </item>
+                                <item name="sidebar" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="shipping-information" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="usp-ship-to" xsi:type="array">
+                                                    <item name="sortOrder" xsi:type="string">0</item>
+                                                    <item name="component" xsi:type="string">SR_UpsShip/js/view/checkout/shipping-information/ship-to</item>
+                                                    <item name="displayArea" xsi:type="string">ship-to</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
                             </item>
                         </item>
                     </item>

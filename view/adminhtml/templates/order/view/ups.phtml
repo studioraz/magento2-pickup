@@ -2,12 +2,12 @@
 <?php if ($block->canShow()): ?>
     <section class="admin__page-section">
         <div class="admin__page-section-title">
-            <span class="title"><?php /* @escapeNotVerified */ echo __('UPS Additional Data') ?></span>
+            <span class="title"><?php /* @escapeNotVerified */ echo __('PickUPS Location Information') ?></span>
         </div>
         <div class="admin__page-section-content">
-            <div><?php echo __('Location ID'); ?>: <?php echo $block->getUpsLocationId(); ?></div>
+            <div><strong><?php echo $block->getUpsLocationId(); ?></strong></div>
             <?php foreach ($block->getUpsLocationDetails() as $detailName => $detail): ?>
-                <div><?php echo ucfirst($detailName) . ': ' . $detail; ?></div>
+                <div><?php /* @escapeNotVerified */ echo $detail; ?></div>
             <?php endforeach; ?>
         </div>
     </section>

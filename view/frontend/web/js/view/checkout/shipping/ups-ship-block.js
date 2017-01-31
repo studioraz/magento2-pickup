@@ -39,7 +39,7 @@ define([
 
             this._super(options);
 
-            this.observe('isVisible locationHTML');
+            this.observe('isVisible locationHTML isInfoVisible');
 
             return this;
 
@@ -48,6 +48,7 @@ define([
         showPickerPopup: function (data, event) {
             event.preventDefault();
             window.PickupsSDK.show();
+            return false;
         },
 
         _onShippingMethodChanged: function (data) {
@@ -67,7 +68,7 @@ define([
                 }
             }
             else {
-                this._clear();
+                //this._clear();
             }
         },
 
@@ -123,7 +124,7 @@ define([
             var compiled = _.template("<strong><%= title %> (<%= iid %>)</strong><br/><%= street %>,<%= city %><br/><%= zip %>");
             var html = compiled(this.location);
 
-            this.locationHTML(html);
+            this.locationHTML(html).isInfoVisible(true);
 
             // set location info to shipping form hidden fields
             this._setAdressValue('ups_iid', this.location.iid)

@@ -82,4 +82,9 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
 
         return $result;
     }
+
+    public function isTrackingAvailable()
+    {
+        return true;
+    }
 }
