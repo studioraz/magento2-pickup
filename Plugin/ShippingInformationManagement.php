@@ -39,6 +39,9 @@ class ShippingInformationManagement
     ) {
         $returnValue = $proceed($cartId, $addressInformation);
         $extAttributes = $addressInformation->getShippingAddress()->getExtensionAttributes();
+        if (!$extAttributes) {
+            return $returnValue;
+        }
         $shippingUpsPickupId = $extAttributes->getUpsIid();
         $shippingAdditionalInformation = $extAttributes->getUpsLocation();
         $quote = $this->quoteRepository->getActive($cartId);
@@ -49,7 +52,7 @@ class ShippingInformationManagement
                 throw new InputException(__('Please select pickup location for this carrier'));
             }
             $shippingAddress
-                ->setShippingUpsPickupId($shippingUpsPickupId)
+                ->setShippingUpsPickupId(htmlspecialchars($shippingUpsPickupId))
                 ->setShippingAdditionalInformation($shippingAdditionalInformation)
                 ->save();
         }
