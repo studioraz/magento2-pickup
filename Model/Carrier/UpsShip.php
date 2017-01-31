@@ -71,7 +71,7 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $method->setCarrierTitle($this->getConfigData('title'));
 
         $method->setMethod(self::UPS_SHIP_PICKUP_METHOD_CODE);
-        $method->setMethodTitle($this->getConfigData('name'));
+        $method->setMethodTitle($this->getConfigData('title'));
 
         $freeShippingLimit = (int)$this->getConfigData('free_shipping_limit');
         $price = ($freeShippingLimit > 0 && $request->getPackageValueWithDiscount() >= $freeShippingLimit)
@@ -84,6 +84,16 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         $result->append($method);
 
         return $result;
+    }
+
+    /**
+     *  Retrieve sort order of current carrier
+     *  Shipping line must be last one as the picker button is located at the additional block
+     * @return string|null
+     */
+    public function getSortOrder()
+    {
+        return 999;
     }
 
     public function isTrackingAvailable()

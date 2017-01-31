@@ -3,34 +3,33 @@
     <system>
         <section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
             <group id="upsship" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>UPS Ship</label>
+                <label>PickUPS Ship</label>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="name" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Method Name</label>
-                </field>
-                <field id="price" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Default Price</label>
-                    <validate>validate-number validate-zero-or-greater</validate>
-                </field>
-                <field id="sort_order" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Sort Order</label>
-                </field>
                 <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Title</label>
                 </field>
-                <field id="free_shipping_limit" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Free Shipping Limit</label>
-                    <comment>Free Shipping if Subtotal > X. 0 - no Free Shipping available</comment>
+                <field id="price" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="showmethod" translate="label" type="select" sortOrder="92" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Show Method if Not Applicable</label>
-                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                <field id="free_shipping_limit" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Minimum for Free Shipping</label>
+                    <comment>Minimum subtotal amount to get free shipping</comment>
                 </field>
-                <field id="specificerrmsg" translate="label" type="textarea" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Displayed Error Message</label>
+                <field id="sallowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60"
+                       translate="label" type="select">
+                    <label>Ship to Applicable Countries</label>
+                    <frontend_class>shipping-applicable-country</frontend_class>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70"
+                       translate="label" type="select">
+                    <label>Ship to Specific Countries</label>
+                    <can_be_empty>1</can_be_empty>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                 </field>
             </group>
         </section>
