@@ -3,8 +3,9 @@
 define([
     'jquery',
     'mage/utils/wrapper',
-    'Magento_Checkout/js/model/quote'
-], function ($, wrapper, quote) {
+    'Magento_Checkout/js/model/quote',
+    'mage/translate'
+], function ($, wrapper, quote, $t) {
     'use strict';
 
     return function (setShippingInformationAction) {
@@ -15,9 +16,13 @@ define([
                 shippingAddress['extension_attributes'] = {};
             }
 
+            if (quote.shippingMethod().carrier_code == 'upsship' &&
+                (!shippingAddress.customAttributes['ups_iid'] || !shippingAddress.customAttributes['ups_location'])) {
+                return alert($t('Please choose a pickup location'));
+            }
             shippingAddress['extension_attributes']['ups_iid'] = shippingAddress.customAttributes['ups_iid'];
             shippingAddress['extension_attributes']['ups_location'] = shippingAddress.customAttributes['ups_location'];
-            // pass execution to original action ('Magento_Checkout/js/action/set-shipping-information')
+
             return originalAction();
         });
     };

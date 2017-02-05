@@ -6,9 +6,10 @@
                 <active>1</active>
                 <sallowspecific>0</sallowspecific>
                 <model>SR\UpsShip\Model\Carrier\UpsShip</model>
-                <name>Ups Ship</name>
-                <price>15.00</price>
-                <title>Ups Ship</title>
+                <title>PickUPS Ship</title>
+                <price>10.00</price>
+                <sallowspecific>1</sallowspecific>
+                <specificcountry>IL</specificcountry>
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
             </upsship>
         </carriers>

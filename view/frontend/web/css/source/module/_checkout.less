@@ -3,6 +3,9 @@
 //  _____________________________________________
 
 @block_background-color: @color-white-smoke;
+@ups-green: #8ec840;
+@ups-blue: #25408f;
+
 
 //
 //    Common
@@ -14,20 +17,29 @@
     &:extend(.abs-add-clearfix all);
   }
 
-  #pickups-picker {
+  .ups-pickups-info-2, #pickups-picker {
+    height: 100px;
+    border: 1px solid @ups-green;
     float: left;
+    box-sizing: border-box;
   }
 
-  .pickups-picker {
+  #pickups-picker {
+    -webkit-background-size:cover;
+    background-size:cover;
+    width: 145px;
+  }
 
+  .ups-pickups-info-2 {
+    width: auto;
+    color: @ups-blue;
+    padding: 20px;
   }
 
   .pickups-info {
     //background-color: @block_background-color;
-    padding:10px;
-    float: left;
-    max-width:250px;
-    margin-left:10px;
+    //padding:10px;
+    //margin-left:10px;
   }
 }
 
@@ -38,6 +50,7 @@
 .media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
 
 }
+
 
 //
 //    Mobile @screen__m 768px and under
