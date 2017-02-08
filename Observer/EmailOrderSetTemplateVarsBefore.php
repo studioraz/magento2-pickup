@@ -35,9 +35,8 @@ class EmailOrderSetTemplateVarsBefore implements ObserverInterface
         } catch (\Exception $e) {
             return;
         }
-        $locationAddress = $locationData['title'] . ': ' . $locationData['city'] . ', ' . $locationData['street'] .
-            $locationData['zip'];
+        $locationAddress = $locationData['title'] . ': ' . $locationData['city'] . ', ' . $locationData['street'] . ', ' . $locationData['zip'];
         $oldShippingMsg = $variablesObject->getShippingMsg() ? $variablesObject->getShippingMsg() . '; ' : '';
-        $variablesObject->setShippingMsg($oldShippingMsg . __('Pickup location address: %1', $locationAddress));
+        $variablesObject->setShippingMsg($oldShippingMsg . ' ' . $locationAddress);
     }
 }
