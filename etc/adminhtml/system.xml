@@ -3,7 +3,7 @@
     <system>
         <section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
             <group id="upsship" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
-                <label>PickUPS Ship</label>
+                <label>PickUP Ship</label>
                 <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
@@ -26,7 +26,7 @@
                     <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
                 </field>
                 <field id="specificcountry" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="70"
-                       translate="label" type="select">
+                       translate="label" type="multiselect">
                     <label>Ship to Specific Countries</label>
                     <can_be_empty>1</can_be_empty>
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
@@ -34,7 +34,7 @@
             </group>
         </section>
         <section id="upsship" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
-            <label>UpsShip Integration</label>
+            <label>PickUP Ship Integration</label>
             <tab>studioraz</tab>
             <resource>SR_UpsShip::upsship</resource>
             <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">

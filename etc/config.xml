@@ -4,12 +4,11 @@
         <carriers>
             <upsship>
                 <active>1</active>
-                <sallowspecific>0</sallowspecific>
                 <model>SR\UpsShip\Model\Carrier\UpsShip</model>
-                <title>PickUPS Ship</title>
+                <title>PickUP Ship</title>
                 <price>10.00</price>
-                <sallowspecific>1</sallowspecific>
-                <specificcountry>IL</specificcountry>
+                <!--<sallowspecific>1</sallowspecific>-->
+                <!--<specificcountry>IL</specificcountry>-->
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
             </upsship>
         </carriers>
@@ -18,8 +17,8 @@
                 <is_live_mode>0</is_live_mode>
                 <service_domain_prefix_live>https://www.ship.co.il/</service_domain_prefix_live>
                 <service_domain_prefix_dev>https://beta.ship.co.il/</service_domain_prefix_dev>
-                <login>yadin@kolitz.net</login>
-                <customer_number>634365</customer_number>
+                <!--<login></login>-->
+                <!--<customer_number></customer_number>-->
                 <password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
             </general>
         </upsship>
