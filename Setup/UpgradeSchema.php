@@ -13,7 +13,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
         if (version_compare($context->getVersion(), '0.0.2', '<')) {
             $installer = $setup;
             $installer->startSetup();
-            foreach (['sales_order_address', 'quote_address'] as $tableAlias) {
+            foreach (['sales_order', 'quote'] as $tableAlias) {
                 $installer->getConnection()
                     ->addColumn($installer->getConnection()->getTableName($tableAlias),
                         'shipping_ups_pickup_id',

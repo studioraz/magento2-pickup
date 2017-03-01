@@ -1,11 +1,10 @@
 <?php
 namespace SR\UpsShip\Controller\Checkout;
 
-use SR\UpsShip\Model\Carrier\UpsShip;
-
 class SaveAdditional extends \Magento\Framework\App\Action\Action
 {
-    public function __construct(\Magento\Framework\App\Action\Context $context,
+    public function __construct(
+        \Magento\Framework\App\Action\Context $context,
         \Magento\Checkout\Model\Session $checkoutSession
     )
     {
@@ -16,11 +15,10 @@ class SaveAdditional extends \Magento\Framework\App\Action\Action
     public function execute()
     {
         $quote = $this->checkoutSession->getQuote();
-        $shippingMethod = $this->getRequest()->getParam('shipping_method');
+        $isActive = $this->getRequest()->getParam('is_active');
         $shippingUpsPickupId = $this->getRequest()->getParam('shipping_ups_pickup_id');
-        $shippingAdditionalInformation = $this->getRequest()->getParam('shipping_additional information');
-        $pickupMethod = UpsShip::UPS_SHIP_CARRIER_CODE . '_' . UpsShip::UPS_SHIP_PICKUP_METHOD_CODE;
-        if ($shippingMethod == $pickupMethod) {
+        $shippingAdditionalInformation = $this->getRequest()->getParam('shipping_additional_information');
+        if ($isActive) {
             $quote
                 ->setShippingUpsPickupId(htmlspecialchars($shippingUpsPickupId))
                 ->setShippingAdditionalInformation($shippingAdditionalInformation);

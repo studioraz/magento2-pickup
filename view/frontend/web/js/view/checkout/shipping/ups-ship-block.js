@@ -31,18 +31,14 @@ define([
         carrierCode: 'upsship',
         location: null,
         initialize: function (options) {
-
             this.registry = registry;
             this.quote = quote;
 
             quote.shippingMethod.subscribe(this._onShippingMethodChanged, this);
-
             this._super(options);
-
             this.observe('isVisible locationHTML isInfoVisible');
 
             return this;
-
         },
 
         showPickerPopup: function (data, event) {
@@ -54,21 +50,19 @@ define([
         _onShippingMethodChanged: function (data) {
 
             var isActive = data.carrier_code == this.carrierCode;
-
             this.isVisible(isActive);
 
             if (isActive) {
                 if (!this.hasPickerInitialized) {
                     this._initializePicker();
                 }
-                var location = this._getAdressValue('ups_location')
+                var location = this.registry.get('ups_location');
                 if (location) {
                     this.location = JSON.parse(location);
                     this._update();
                 }
-            }
-            else {
-                //this._clear();
+            } else {
+                this._clear();
             }
         },
 
@@ -114,9 +108,7 @@ define([
 
                 self._update();
             });
-
             this.hasPickerInitialized = true;
-
         },
 
         _update: function () {
@@ -126,15 +118,28 @@ define([
 
             this.locationHTML(html).isInfoVisible(true);
 
-            // set location info to shipping form hidden fields
-            this._setAdressValue('ups_iid', this.location.iid)
-                ._setAdressValue('ups_location', JSON.stringify(this.location));
+            var upsLocation = JSON.stringify(this.location);
+            this.registry.set('ups_location', upsLocation);
+            $.ajax({
+                method: 'post',
+                url: '/upsship/checkout/saveAdditional',
+                data: {
+                    'is_active': true,
+                    'shipping_ups_pickup_id': this.location.iid,
+                    'shipping_additional_information': upsLocation
+                }
+            });
         },
 
         _clear: function () {
             this.locationHTML('');
-            this._setAdressValue('ups_iid', '')
-                ._setAdressValue('ups_location', '');
+            $.ajax({
+                method: 'post',
+                url: '/upsship/checkout/saveAdditional',
+                data: {
+                    'is_active': false
+                }
+            });
         }
     });
 });
