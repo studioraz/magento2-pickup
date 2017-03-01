@@ -39,7 +39,7 @@ class InsertPickupsShipment extends AbstractService
                     'ContactPerson' => $this->scopeConfig->getValue('general/store_information/name'),
                     'Phone1' => $this->scopeConfig->getValue('general/store_information/phone')
                 ],
-                'PickupPointID' => $this->getEntity()->getShippingAddress()->getShippingUpsPickupId(),
+                'PickupPointID' => $this->getEntity()->getShippingUpsPickupId(),
                 'Reference1' => $this->getEntity()->getIncrementId(),
                 'UseDefaultShipperAddress' => 'true',
                 'Weight' => $this->getEntity()->getWeight()

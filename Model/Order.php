@@ -4,15 +4,15 @@
  * For more information contact us at dev@studioraz.co.il
  * See COPYING_STUIDRAZ.txt for license details.
  */
-namespace SR\UpsShip\Model\Order;
+namespace SR\UpsShip\Model;
 
-use Magento\Sales\Model\Order\Address as OrderAddress;
+use Magento\Sales\Model\Order as SalesOrder;
 
 /**
- * Class Address
- * @package SR\UpsShip\Model\Order
+ * Class Order
+ * @package SR\UpsShip\Model
  */
-class Address extends OrderAddress
+class Order extends SalesOrder
 {
     const SHIPPING_UPS_PICKUP_ID = 'shipping_ups_pickup_id';
     const SHIPPING_ADDITIONAL_INFORMATION = 'shipping_additional_information';

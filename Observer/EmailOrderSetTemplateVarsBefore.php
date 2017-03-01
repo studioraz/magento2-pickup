@@ -29,9 +29,8 @@ class EmailOrderSetTemplateVarsBefore implements ObserverInterface
         if ($order->getIsVirtual()) {
             return;
         }
-        $shippingAddress = $order->getShippingAddress();
         try {
-            $locationData = \Zend_Json::decode($shippingAddress->getShippingAdditionalInformation());
+            $locationData = \Zend_Json::decode($order->getShippingAdditionalInformation());
         } catch (\Exception $e) {
             return;
         }
