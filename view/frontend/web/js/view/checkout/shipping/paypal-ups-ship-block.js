@@ -18,27 +18,28 @@ define([
     'uiComponent',
     'uiRegistry',
     'ko',
-    'Magento_Checkout/js/model/quote',
     'jquery'
-], function (Component, registry, ko, quote, $) {
+], function (Component, registry, ko, $) {
     'use strict';
+    window.shippingMethod = ko.observable({carrier_code: ''});
     return Component.extend({
         defaults: {
             template: 'SR_UpsShip/checkout/shipping/ups-ship-block'
         },
-        hasPickerInitialized: false,
-        hasInitialized: false,
-        carrierCode: 'upsship',
-        location: null,
+
         initialize: function (options) {
             this.registry = registry;
-            this.quote = quote;
-
-            quote.shippingMethod.subscribe(this._onShippingMethodChanged, this);
             this._super(options);
+
+            window.shippingMethod.subscribe(this._onShippingMethodChanged, this);
+
             this.observe('isVisible locationHTML isInfoVisible');
 
             return this;
+        },
+
+        _isLocationSelected: function () {
+            return registry.get('ups_location');
         },
 
         showPickerPopup: function (data, event) {
@@ -48,7 +49,6 @@ define([
         },
 
         _onShippingMethodChanged: function (data) {
-
             var isActive = data.carrier_code == this.carrierCode;
             this.isVisible(isActive);
 
@@ -80,11 +80,14 @@ define([
         },
 
         _initializePicker: function () {
+
             // include UPS JS library
             require(['pickups']);
+
             $(document.body).on('pickups-before-open', {component: this}, function (event) {
 
                 // prepare customer location
+
                 var self = event.data.component;
 
                 var o = {
@@ -98,24 +101,29 @@ define([
             });
 
             $(document.body).on('pickups-after-choosen', {component: this}, function (event, data) {
+
                 var self = event.data.component;
+
                 self.location = event.originalEvent.detail;
+
                 self._update();
             });
             this.hasPickerInitialized = true;
         },
 
         _update: function () {
+
             var compiled = _.template("<strong><%= title %> (<%= iid %>)</strong><br/><%= street %>,<%= city %><br/><%= zip %>");
             var html = compiled(this.location);
+
             this.locationHTML(html).isInfoVisible(true);
 
             var upsLocation = JSON.stringify(this.location);
             this.registry.set('ups_location', upsLocation);
             this._sendRequest({
-                    'is_active': true,
-                    'shipping_ups_pickup_id': this.location.iid,
-                    'shipping_additional_information': upsLocation
+                'is_active': true,
+                'shipping_ups_pickup_id': this.location.iid,
+                'shipping_additional_information': upsLocation
             });
         },
 

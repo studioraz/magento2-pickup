@@ -1,6 +1,15 @@
 <?php
+/**
+ * Copyright © 2016 Studio Raz. All rights reserved.
+ * For more information contact us at dev@studioraz.co.il
+ * See COPYING_STUIDRAZ.txt for license details.
+ */
 namespace SR\UpsShip\Controller\Checkout;
 
+/**
+ * Class SaveAdditional
+ * @package SR\UpsShip\Controller\Checkout
+ */
 class SaveAdditional extends \Magento\Framework\App\Action\Action
 {
     public function __construct(
@@ -12,6 +21,11 @@ class SaveAdditional extends \Magento\Framework\App\Action\Action
         parent::__construct($context);
     }
 
+    /**
+     * Saves UPS shipping additional information to the Quote
+     *
+     * @throws \Exception
+     */
     public function execute()
     {
         $quote = $this->checkoutSession->getQuote();
