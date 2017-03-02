@@ -1,0 +1,21 @@
+<div id="upsship-component" data-bind="scope:'ups-ship-block'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+<script>
+    window.shippingAddress = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getShippingAddress()); ?>;
+    window.checkoutConfig = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getCheckoutConfig()); ?>;
+
+</script>
+<script type="text/x-magento-init">
+    {
+        "#upsship-component": {
+            "Magento_Ui/js/core/app": {
+               "components": {
+                    "ups-ship-block": {
+                        "component": "SR_UpsShip/js/view/checkout/shipping/paypal-ups-ship-block"
+                    }
+                }
+            }
+        }
+    }
+</script>

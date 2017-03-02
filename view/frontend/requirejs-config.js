@@ -1,8 +1,8 @@
 var config = {
     config: {
         mixins: {
-            'Magento_Checkout/js/action/set-shipping-information': {
-                'SR_UpsShip/js/action/set-shipping-information-mixin': true
+            'Magento_Paypal/order-review': {
+                'SR_UpsShip/js/view/paypal/order-review': true
             }
         }
     },
