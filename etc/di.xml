@@ -7,7 +7,6 @@
  */
 -->
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
-    <preference for="Magento\Sales\Model\Order" type="SR\UpsShip\Model\Order"/>
     <type name="SR\UpsShip\Logger\UpsShip">
         <arguments>
             <argument name="name" xsi:type="string">upsship_logger</argument>
