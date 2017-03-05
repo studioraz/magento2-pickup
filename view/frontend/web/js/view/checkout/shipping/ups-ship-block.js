@@ -15,122 +15,59 @@
  */
 
 define([
-    'uiComponent',
+    'uiPickup',
     'uiRegistry',
-    'ko',
-    'Magento_Checkout/js/model/quote',
-    'jquery'
-], function (Component, registry, ko, quote, $) {
+    'Magento_Checkout/js/model/quote'
+], function (uiPickup, registry, quote) {
     'use strict';
-    return Component.extend({
-        defaults: {
-            template: 'SR_UpsShip/checkout/shipping/ups-ship-block'
-        },
-        hasPickerInitialized: false,
-        hasInitialized: false,
-        carrierCode: 'upsship',
-        location: null,
+    return uiPickup.extend({
+
         initialize: function (options) {
-            this.registry = registry;
+
             this.quote = quote;
 
-            quote.shippingMethod.subscribe(this._onShippingMethodChanged, this);
-            this._super(options);
-            this.observe('isVisible locationHTML isInfoVisible');
+            this.quote.shippingMethod.subscribe(this._onShippingMethodChanged, this);
 
-            return this;
+            var self = this;
+
+            registry.async('checkoutProvider')(function (checkoutProvider) {
+                checkoutProvider.on('shippingAddress', function (shippingAddressData) {
+                    self.shippingAddressData = shippingAddressData;
+                });
+            });
+
+
+
+            return this._super(options);
+
         },
 
-        showPickerPopup: function (data, event) {
-            event.preventDefault();
-            window.PickupsSDK.show();
-            return false;
+
+        _onShippingMethodChanged : function (data) {
+            this._super(data.carrier_code);
         },
 
-        _onShippingMethodChanged: function (data) {
 
-            var isActive = data.carrier_code == this.carrierCode;
-            this.isVisible(isActive);
+        _getShippingAddress : function () {
 
-            if (isActive) {
-                if (!this.hasPickerInitialized) {
-                    this._initializePicker();
+            // try to get address daa from quote object - recent updated.
+            if (this.quote.shippingAddress().city && this.quote.shippingAddress().street) {
+                return {
+                    'city' : this.quote.shippingAddress().city,
+                    'street' : this.quote.shippingAddress().street[0]
                 }
-                var location = this.registry.get('ups_location');
-                if (location) {
-                    this.location = JSON.parse(location);
-                    this._update();
-                }
-            } else {
-                this._clear();
             }
-        },
 
-        _getAdressValue: function (fieldName) {
-            var component = this.registry.get('checkout.steps.shipping-step.shippingAddress.shipping-address-fieldset.' + fieldName);
-            return component ? component.value() : null;
-        },
+            // fallback to checkout provider address
 
-        _setAdressValue: function (fieldName, value) {
-            var component = this.registry.get('checkout.steps.shipping-step.shippingAddress.shipping-address-fieldset.' + fieldName);
-            if (component) {
-                component.value(value)
+            var checkoutAddress = this.shippingAddressData;
+
+            return {
+                'city' : checkoutAddress.city,
+                'street' : checkoutAddress.street['0']
             }
-            return this;
-        },
 
-        _initializePicker: function () {
-            // include UPS JS library
-            require(['pickups']);
-            $(document.body).on('pickups-before-open', {component: this}, function (event) {
-
-                // prepare customer location
-                var self = event.data.component;
-
-                var o = {
-                    location: {
-                        city: self._getAdressValue('city'),
-                        street: self._getAdressValue('street.0')
-                    }
-                };
-                var json = JSON.stringify(o);
-                window.PickupsSDK.setDefaults(json);
-            });
-
-            $(document.body).on('pickups-after-choosen', {component: this}, function (event, data) {
-                var self = event.data.component;
-                self.location = event.originalEvent.detail;
-                self._update();
-            });
-            this.hasPickerInitialized = true;
-        },
-
-        _update: function () {
-            var compiled = _.template("<strong><%= title %> (<%= iid %>)</strong><br/><%= street %>,<%= city %><br/><%= zip %>");
-            var html = compiled(this.location);
-            this.locationHTML(html).isInfoVisible(true);
-
-            var upsLocation = JSON.stringify(this.location);
-            this.registry.set('ups_location', upsLocation);
-            this._sendRequest({
-                    'is_active': true,
-                    'shipping_ups_pickup_id': this.location.iid,
-                    'shipping_additional_information': upsLocation
-            });
-        },
-
-        _clear: function () {
-            this.locationHTML('');
-            this._sendRequest({'is_active': false});
-        },
-
-        _sendRequest: function (data) {
-            $.ajax({
-                method: 'post',
-                url: '/upsship/checkout/saveAdditional',
-                showLoader: true,
-                data: data
-            });
         }
+
     });
 });
