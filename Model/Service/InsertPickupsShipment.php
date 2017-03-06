@@ -66,7 +66,7 @@ class InsertPickupsShipment extends AbstractService
             $response->{$this->_getRequestMethodName() . 'Result'} : new \stdClass();
 
         if (isset($response->IsSucceeded) && $response->IsSucceeded != 'true' && isset($response->LastError)) {
-            $errorMessage = $response->LastError->ErrorMessage . '. ' . $response->LastError->OriginalMessage;
+            $errorMessage = $response->LastError->ErrorMessage . ' ' . $response->LastError->OriginalMessage;
             $errorCode = $response->LastError->ErrorCode;
         } else if ($response->IsSucceeded != 'true') {
             $errorMessage = __('Some error has occurred during the %1 request.', $this->_getRequestMethodName());
