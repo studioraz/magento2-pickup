@@ -1,14 +1,16 @@
 var config = {
     config: {
         mixins: {
-            'Magento_Paypal/order-review': {
-                'SR_UpsShip/js/view/paypal/order-review': true
+
+            'Magento_Checkout/js/action/set-shipping-information': {
+                'SR_UpsShip/js/action/set-shipping-information-mixin': true
             }
         }
     },
     map: {
         '*': {
-            'pickups': 'SR_UpsShip/js/lib/ups-pickup'
+            'pickup-lib': 'SR_UpsShip/js/lib/ups-pickup',
+            'uiPickup' : 'SR_UpsShip/js/lib/core/pickup'
         }
     },
     shim: {
