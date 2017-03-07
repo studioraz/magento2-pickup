@@ -1,24 +1,31 @@
 <?xml version="1.0"?>
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
     <system>
         <tab id="studioraz" translate="label">
             <label>Studio Raz</label>
         </tab>
-        <section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1" showInStore="1">
-            <group id="upsship" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="carriers" translate="label" type="text" sortOrder="320" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <group id="upsship" translate="label" type="text" sortOrder="0" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
                 <label>PickUP Ship</label>
-                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="active" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
                     <label>Enabled</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
-                <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="title" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <label>Title</label>
                 </field>
-                <field id="price" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="0">
+                <field id="price" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1"
+                       showInStore="0">
                     <label>Price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
                 </field>
-                <field id="free_shipping_limit" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="free_shipping_limit" translate="label" type="text" sortOrder="6" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>Minimum for Free Shipping</label>
                     <comment>Minimum subtotal amount to get free shipping</comment>
                 </field>
@@ -36,33 +43,47 @@
                 </field>
             </group>
         </section>
-        <section id="upsship" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+        <section id="upsship" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
             <label>PickUP Ship Integration</label>
             <tab>studioraz</tab>
             <resource>SR_UpsShip::upsship</resource>
-            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
                 <label>General Settings</label>
-                <field id="is_live_mode" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="is_live_mode" translate="label" type="select" sortOrder="2" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
                     <label>Is Live Mode</label>
                     <config_path>upsship/general/is_live_mode</config_path>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                     <validate>validate-no-empty</validate>
                 </field>
-                <field id="service_domain_prefix_live" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Service Domain Prefix Live</label>
+                <field id="service_domain_prefix_live" translate="label" type="text" sortOrder="3" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Live API URL</label>
+                    <frontend_class>required-entry validate-url</frontend_class>
                 </field>
-                <field id="service_domain_prefix_dev" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Service Domain Prefix Live</label>
+                <field id="service_domain_prefix_dev" translate="label" type="text" sortOrder="4" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Sandbox API URL</label>
+                    <frontend_class>required-entry validate-url</frontend_class>
                 </field>
-                <field id="login" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Login</label>
+                <field id="customer_number" translate="label" type="text" sortOrder="7" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Account Number</label>
+                    <frontend_class>required-entry validate-digits</frontend_class>
                 </field>
-                <field id="password" translate="label" type="obscure" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+                <field id="login" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
+                    <label>Username</label>
+                    <comment>UPS email address</comment>
+                    <frontend_class>required-entry validate-email</frontend_class>
+                </field>
+                <field id="password" translate="label" type="obscure" sortOrder="6" showInDefault="1" showInWebsite="1"
+                       showInStore="1">
                     <label>Password</label>
                     <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
-                </field>
-                <field id="customer_number" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>Customer Number</label>
+                    <frontend_class>required-entry</frontend_class>
                 </field>
             </group>
         </section>

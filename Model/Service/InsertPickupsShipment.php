@@ -5,6 +5,7 @@
  * See COPYING_STUIDRAZ.txt for license details.
  */
 namespace SR\UpsShip\Model\Service;
+use Magento\TestFramework\Event\Magento;
 
 /**
  * Class InsertPickupsShipment
@@ -32,12 +33,18 @@ class InsertPickupsShipment extends AbstractService
      */
     protected function _prepareRequest()
     {
+        /** @var \Magento\Sales\Model\Order $order */
+        $order = $this->getEntity();
+
         $data = [
             'info' => [
                 'NumberOfPackages' => 1,
                 'ConsigneeAddress' => [
-                    'ContactPerson' => $this->scopeConfig->getValue('general/store_information/name'),
-                    'Phone1' => $this->scopeConfig->getValue('general/store_information/phone')
+                    'CustomerName' => $order->getCustomerName(),
+                    'ContactPerson' => $order->getCustomerName(),
+                    'CityName' => $order->getShippingAddress()->getCity(),
+                    'StreetName' => $order->getShippingAddress()->getStreetLine(0),
+                    'Phone1' => $order->getShippingAddress()->getTelephone()
                 ],
                 'PickupPointID' => $this->getEntity()->getShippingUpsPickupId(),
                 'Reference1' => $this->getEntity()->getIncrementId(),
