@@ -13,12 +13,13 @@ use Magento\Shipping\Model\Rate\Result;
  * Class UpsShip
  * @package SR\UpsShip\Model\Carrier
  */
-class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
+class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline implements
     \Magento\Shipping\Model\Carrier\CarrierInterface
 {
     protected $_code = 'upsship';
     protected $_rateMethodFactory;
     protected $_rateResultFactory;
+    protected $_trackingResultFactory;
     const UPS_SHIP_CARRIER_CODE = 'upsship';
     const UPS_SHIP_PICKUP_METHOD_CODE = 'pickup';
 
@@ -31,16 +32,45 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      * @param array $data
      */
     public function __construct(
-        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Shipping\Model\Rate\ResultFactory $rateResultFactory,
         \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
+        \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
+        \Magento\Framework\Xml\Security $xmlSecurity,
+        \Magento\Shipping\Model\Simplexml\ElementFactory $xmlElFactory,
+        \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
+        \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory,
+        \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory,
+        \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory,
+        \Magento\Directory\Model\RegionFactory $regionFactory,
+        \Magento\Directory\Model\CountryFactory $countryFactory,
+        \Magento\Directory\Model\CurrencyFactory $currencyFactory,
+        \Magento\Directory\Helper\Data $directoryData,
+        \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
         array $data = []
     ) {
         $this->_rateResultFactory = $rateResultFactory;
+        $this->_trackingResultFactory = $trackFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
-        parent::__construct($scopeConfig, $rateErrorFactory, $logger, $data);
+        parent::__construct(
+            $scopeConfig,
+            $rateErrorFactory,
+            $logger,
+            $xmlSecurity,
+            $xmlElFactory,
+            $rateFactory,
+            $rateMethodFactory,
+            $trackFactory,
+            $trackErrorFactory,
+            $trackStatusFactory,
+            $regionFactory,
+            $countryFactory,
+            $currencyFactory,
+            $directoryData,
+            $stockRegistry,
+            $data
+        );
     }
 
     /**
@@ -99,5 +129,27 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     public function isTrackingAvailable()
     {
         return true;
+    }
+
+    protected function _doShipmentRequest(\Magento\Framework\DataObject $request)
+    {
+        return false;
+    }
+
+    public function getTracking($tracking)
+    {
+        $result = $this->_trackFactory->create();
+
+        $error = $this->_trackErrorFactory->create();
+        $error->setCarrier($this->_code);
+        $error->setCarrierTitle($this->getConfigData('title'));
+        $error->setTracking($tracking);
+
+        // not displayed anywhere, though needs to be set
+        $error->setErrorMessage(true);
+        $result->append($error);
+
+        return $result;
+
     }
 }
