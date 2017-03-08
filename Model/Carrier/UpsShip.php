@@ -150,6 +150,10 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         $result->append($error);
 
         return $result;
+    }
 
+    public function proccessAdditionalValidation(\Magento\Framework\DataObject $request)
+    {
+        return $this;
     }
 }
