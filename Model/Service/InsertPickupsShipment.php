@@ -46,7 +46,7 @@ class InsertPickupsShipment extends AbstractService
                     'StreetName' => $order->getShippingAddress()->getStreetLine(0),
                     'Phone1' => $order->getShippingAddress()->getTelephone()
                 ],
-                'PickupPointID' => $this->getEntity()->getShippingUpsPickupId(),
+                'PickupPointID' => $order->getShippingAddress()->getShippingUpsPickupId(),
                 'Reference1' => $this->getEntity()->getIncrementId(),
                 'UseDefaultShipperAddress' => 'true',
                 'Weight' => $this->getEntity()->getWeight()
