@@ -10,6 +10,8 @@
                 <!--<sallowspecific>1</sallowspecific>-->
                 <!--<specificcountry>IL</specificcountry>-->
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+                <use_tablerate>0</use_tablerate>
+                <subtract_amount>3</subtract_amount>
             </upsship>
         </carriers>
         <upsship>
