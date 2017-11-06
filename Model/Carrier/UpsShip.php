@@ -134,11 +134,11 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
      */
     protected function getCalculatedFinalPrice(RateRequest $request)
     {
-        $price = 0;
+        $price = $this->getConfigData('price');
 
         $freeShippingLimit = (int)$this->getConfigData('free_shipping_limit');
-        if ($freeShippingLimit <= 0 && $request->getPackageValueWithDiscount() < $freeShippingLimit) {
-            $price = $this->getConfigData('price');
+        if ($freeShippingLimit > 0 && $request->getPackageValueWithDiscount() >= $freeShippingLimit) {
+            $price = 0;
         }
 
         if (!$this->getConfigData(self::CARRIER_CONFIG_USE_TABLERATE)) {
