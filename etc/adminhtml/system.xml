@@ -53,7 +53,6 @@
                 </field>
                 <field id="subtract_amount" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Amount to be subtracted from table rates</label>
-                    <validate>validate-number validate-zero-or-greater</validate>
                     <depends>
                         <field id="carriers/upsship/use_tablerate">1</field>
                     </depends>
