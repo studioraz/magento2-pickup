@@ -146,11 +146,8 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         }
 
         $subtractAmount = (float)$this->getConfigData(self::CARRIER_CONFIG_SUBTRACT_AMOUNT);
-        //@note: we should avoid to use SubtractAmount <= 0
-        if ($subtractAmount <= 0) {
-            return $price;
-        }
-
+        
+        $subtractAmount = $subtractAmount ? $subtractAmount : 0;
 
         $tablerateCarrierType = 'tablerate';
         $tablerateCarrier = $this->carrierFactory->create($tablerateCarrierType, $request->getStoreId());
