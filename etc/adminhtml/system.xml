@@ -23,11 +23,17 @@
                        showInStore="0">
                     <label>Price</label>
                     <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="carriers/upsship/use_tablerate">0</field>
+                    </depends>
                 </field>
                 <field id="free_shipping_limit" translate="label" type="text" sortOrder="6" showInDefault="1"
                        showInWebsite="1" showInStore="1">
                     <label>Minimum for Free Shipping</label>
                     <comment>Minimum subtotal amount to get free shipping</comment>
+                    <depends>
+                        <field id="carriers/upsship/use_tablerate">0</field>
+                    </depends>
                 </field>
                 <field id="sallowspecific" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="60"
                        translate="label" type="select">
@@ -40,6 +46,16 @@
                     <label>Ship to Specific Countries</label>
                     <can_be_empty>1</can_be_empty>
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                </field>
+                <field id="use_tablerate" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Use Table Rates</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="subtract_amount" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Amount to be subtracted from table rates</label>
+                    <depends>
+                        <field id="carriers/upsship/use_tablerate">1</field>
+                    </depends>
                 </field>
             </group>
         </section>

@@ -16,12 +16,20 @@ use Magento\Shipping\Model\Rate\Result;
 class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline implements
     \Magento\Shipping\Model\Carrier\CarrierInterface
 {
+    const CARRIER_CONFIG_USE_TABLERATE = 'use_tablerate';
+    const CARRIER_CONFIG_SUBTRACT_AMOUNT = 'subtract_amount';
+    const UPS_SHIP_CARRIER_CODE = 'upsship';
+    const UPS_SHIP_PICKUP_METHOD_CODE = 'pickup';
+
     protected $_code = 'upsship';
     protected $_rateMethodFactory;
     protected $_rateResultFactory;
     protected $_trackingResultFactory;
-    const UPS_SHIP_CARRIER_CODE = 'upsship';
-    const UPS_SHIP_PICKUP_METHOD_CODE = 'pickup';
+
+    /**
+     * @var \Magento\Shipping\Model\CarrierFactory
+     */
+    protected $carrierFactory;
 
     /**
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
@@ -48,11 +56,13 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         \Magento\Directory\Model\CurrencyFactory $currencyFactory,
         \Magento\Directory\Helper\Data $directoryData,
         \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
+        \Magento\Shipping\Model\CarrierFactory $carrierFactory,
         array $data = []
     ) {
         $this->_rateResultFactory = $rateResultFactory;
         $this->_trackingResultFactory = $trackFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
+        $this->carrierFactory = $carrierFactory;
         parent::__construct(
             $scopeConfig,
             $rateErrorFactory,
@@ -103,17 +113,60 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         $method->setMethod(self::UPS_SHIP_PICKUP_METHOD_CODE);
         $method->setMethodTitle($this->getConfigData('title'));
 
-        $freeShippingLimit = (int)$this->getConfigData('free_shipping_limit');
-        $price = ($freeShippingLimit > 0 && $request->getPackageValueWithDiscount() >= $freeShippingLimit)
-            ? 0
-            : $this->getConfigData('price');
+        $price = $this->getCalculatedFinalPrice($request);
 
+        // The price is what the customer pays.
         $method->setPrice($price);
-        $method->setCost($price);
+
+        // The cost is what the merchant pays.
+        $method->setCost(0);
 
         $result->append($method);
 
         return $result;
+    }
+
+    /**
+     * Returns calculated final price of Carrier Rate
+     *
+     * @param RateRequest $request
+     * @return float
+     */
+    protected function getCalculatedFinalPrice(RateRequest $request)
+    {
+        $price = $this->getConfigData('price');
+
+        $freeShippingLimit = (int)$this->getConfigData('free_shipping_limit');
+        if ($freeShippingLimit > 0 && $request->getPackageValueWithDiscount() >= $freeShippingLimit) {
+            $price = 0;
+        }
+
+        if (!$this->getConfigData(self::CARRIER_CONFIG_USE_TABLERATE)) {
+            return $price;
+        }
+
+        $subtractAmount = (float)$this->getConfigData(self::CARRIER_CONFIG_SUBTRACT_AMOUNT);
+        //@note: we should avoid to use SubtractAmount <= 0
+        if ($subtractAmount <= 0) {
+            return $price;
+        }
+
+
+        $tablerateCarrierType = 'tablerate';
+        $tablerateCarrier = $this->carrierFactory->create($tablerateCarrierType, $request->getStoreId());
+
+        //@note: CollectRate method will be not processed IF 'carriers/tablerate/active' config value equals to Disabled (0)
+        //@todo: find solution to calculate price with DISABLED Tablerate Carrier
+        $tablerateCollectResult = $tablerateCarrier->collectRates(clone $request);
+        if ($tablerateCollectResult) {
+            foreach ($tablerateCollectResult->getRatesByCarrier($tablerateCarrierType) as $rate) {
+                //@todo: we should change PriceCalculation logic IF RATES Qty > 1, currently BREAK after first iteration is enough
+                $price = $rate->getPrice() - $subtractAmount;
+                break;
+            }
+        }
+
+        return $price >= 0 ? $price : 0;
     }
 
     /**
