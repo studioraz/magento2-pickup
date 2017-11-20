@@ -15,4 +15,10 @@
             </argument>
         </arguments>
     </type>
+
+    <!-- start: sales order extra attributes -->
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin name="sales_order_extra_attributes_operation" type="SR\UpsShip\Plugin\Sales\Order\ExtraAttributesOperation"/>
+    </type>
+    <!-- end: sales order extra attributes -->
 </config>
