@@ -57,6 +57,11 @@
                         <field id="carriers/upsship/use_tablerate">1</field>
                     </depends>
                 </field>
+                <field id="pickup_location_type" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="100"
+                       translate="label" type="select">
+                    <label>Pickup Location Type</label>
+                    <source_model>SR\UpsShip\Model\Config\Source\Locationtype</source_model>
+                </field>
             </group>
         </section>
         <section id="upsship" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1"

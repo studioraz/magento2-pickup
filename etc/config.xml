@@ -12,6 +12,7 @@
                 <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
                 <use_tablerate>0</use_tablerate>
                 <subtract_amount>3</subtract_amount>
+                <pickup_location_type>all</pickup_location_type>
             </upsship>
         </carriers>
         <upsship>

@@ -66,8 +66,10 @@ define([
         },
 
         _initializePicker: function () {
+
             // include UPS JS library
-            require(['pickup-lib']);
+            require([window.checkoutConfig.upship.location_js_url]);
+
             $(document.body).on('pickups-before-open', {component: this}, function (event) {
 
                 // prepare customer location

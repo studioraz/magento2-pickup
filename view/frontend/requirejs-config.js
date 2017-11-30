@@ -9,7 +9,6 @@ var config = {
     },
     map: {
         '*': {
-            'pickup-lib': 'SR_UpsShip/js/lib/ups-pickup',
             'uiPickup' : 'SR_UpsShip/js/lib/core/pickup'
         }
     },
