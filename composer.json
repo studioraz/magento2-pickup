@@ -2,13 +2,14 @@
   "name" : "studioraz/magento2-pickup",
   "description" : "Magento 2 UPS SHIP integration.",
   "type" : "magento2-module",
+  "version": "1.1.2",
   "license": [
     "OSL-3.0",
     "AFL-3.0"
   ],
   "require": {
-    "php": "~5.5.0|~5.6.0|~7.0.0",
-    "magento/framework": "100.1.*"
+    "php": "~7.1",
+    "magento/framework": "*"
   },
   "autoload": {
     "files": [ "registration.php" ],
