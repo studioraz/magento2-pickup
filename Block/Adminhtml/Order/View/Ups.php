@@ -32,7 +32,8 @@ class Ups extends \Magento\Sales\Block\Adminhtml\Order\AbstractOrder
      */
     public function canShow()
     {
-        if ($this->getShippingMethod()->getCarrierCode() == UpsShip::UPS_SHIP_CARRIER_CODE
+            if (!$this->getOrder()->getIsVirtual()
+            && $this->getShippingMethod()->getCarrierCode() == UpsShip::UPS_SHIP_CARRIER_CODE
             && $this->getShippingMethod()->getMethod() == UpsShip::UPS_SHIP_PICKUP_METHOD_CODE
         )
         {
