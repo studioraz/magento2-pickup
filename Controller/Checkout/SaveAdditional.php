@@ -6,16 +6,21 @@
  */
 namespace SR\UpsShip\Controller\Checkout;
 
+use Magento\Checkout\Model\Session;
+use Magento\Framework\App\Action\Context;
 /**
  * Class SaveAdditional
  * @package SR\UpsShip\Controller\Checkout
  */
 class SaveAdditional extends \Magento\Framework\App\Action\Action
 {
-    public function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Checkout\Model\Session $checkoutSession
-    )
+    protected Session $checkoutSession;
+
+    /**
+     * @param Context $context
+     * @param Session $checkoutSession
+     */
+    public function __construct(Context $context, Session $checkoutSession)
     {
         $this->checkoutSession = $checkoutSession;
         parent::__construct($context);
@@ -34,7 +39,7 @@ class SaveAdditional extends \Magento\Framework\App\Action\Action
         $shippingAdditionalInformation = $this->getRequest()->getParam('shipping_additional_information');
         if ($isActive) {
             $quote
-                ->setShippingUpsPickupId(htmlspecialchars($shippingUpsPickupId))
+                ->setShippingUpsPickupId(htmlspecialchars($shippingUpsPickupId ?? ''))
                 ->setShippingAdditionalInformation($shippingAdditionalInformation);
         } else {
             $quote
