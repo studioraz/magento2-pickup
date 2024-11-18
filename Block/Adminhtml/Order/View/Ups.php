@@ -62,7 +62,7 @@ class Ups extends \Magento\Sales\Block\Adminhtml\Order\AbstractOrder
     public function getUpsLocationDetails($asArray = true)
     {
         try {
-            $details = \Zend_Json::decode($this->getOrder()->getShippingAdditionalInformation());
+            $details = \Laminas\Json\Json::decode($this->getOrder()->getShippingAdditionalInformation());
             foreach(array('lat', 'lng', 'dist', 'iid') as $skip) {
                 unset($details[$skip]);
             }

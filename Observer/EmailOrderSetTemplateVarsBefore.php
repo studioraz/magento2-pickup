@@ -30,7 +30,7 @@ class EmailOrderSetTemplateVarsBefore implements ObserverInterface
             return;
         }
         try {
-            $locationData = \Zend_Json::decode($order->getShippingAdditionalInformation());
+            $locationData = \Laminas\Json\Json::decode($order->getShippingAdditionalInformation());
         } catch (\Exception $e) {
             return;
         }

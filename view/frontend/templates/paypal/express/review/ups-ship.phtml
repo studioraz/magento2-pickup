@@ -9,7 +9,7 @@
                     "ups-ship-block": {
                         "component": "SR_UpsShip/js/view/paypal/order/review/ups-ship-block",
                         "options" : {
-                            "shippingAddress" : <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getShippingAddress()); ?>
+                            "shippingAddress" : <?php /* @escapeNotVerified */ echo \Laminas\Json\Json::encode($block->getShippingAddress()); ?>
                         }
                     }
                 }
