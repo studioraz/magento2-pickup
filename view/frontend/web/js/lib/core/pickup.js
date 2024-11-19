@@ -2,14 +2,14 @@
  *
  * UPS location JSON sample:
  * {
-     "lat": 32.0876359,
-     "lng": 34.786194,
-     "title": "פיקאפ בית מרקחת ברק",
-     "street": "רמז 15",
-     "city": "תל אביב יפו",
-     "zip": "שעות פתיחה א-ה 09:00-19:00 יום ו 09:00-14:00",
-     "iid": "PKPS639854",
-     "dist": "0.22"
+ "lat": 32.0876359,
+ "lng": 34.786194,
+ "title": "פיקאפ בית מרקחת ברק",
+ "street": "רמז 15",
+ "city": "תל אביב יפו",
+ "zip": "שעות פתיחה א-ה 09:00-19:00 יום ו 09:00-14:00",
+ "iid": "PKPS639854",
+ "dist": "0.22"
  * }
  *
  */
@@ -36,7 +36,19 @@ define([
 
             this.observe('isVisible locationHTML isInfoVisible');
 
+            this._initializePicker();
+
             return this;
+        },
+
+        _initializeSDK: function () {
+            (function ()
+            {
+                var pkp = document.createElement('script');
+                pkp.type = 'text/javascript'; pkp.async = true;
+                pkp.src = window.checkoutConfig.upship.location_js_url;
+                document.getElementsByTagName('head')[0].appendChild(pkp);
+            })();
         },
 
         showPickerPopup: function (data, event) {
@@ -46,15 +58,11 @@ define([
         },
 
         _onShippingMethodChanged: function (carrierCode) {
-
             var isActive = carrierCode == this.carrierCode;
 
             this.isVisible(isActive);
 
             if (isActive) {
-                if (!this.hasPickerInitialized) {
-                    this._initializePicker();
-                }
                 var location = this.registry.get('ups_location');
                 if (location) {
                     this.location = JSON.parse(location);
@@ -66,10 +74,7 @@ define([
         },
 
         _initializePicker: function () {
-
-            // include UPS JS library
-            require([window.checkoutConfig.upship.location_js_url]);
-
+            this._initializeSDK();
             $(document.body).on('pickups-before-open', {component: this}, function (event) {
 
                 // prepare customer location
