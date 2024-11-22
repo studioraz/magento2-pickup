@@ -8,6 +8,7 @@ namespace SR\UpsShip\Observer;
 
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Event\Observer as EventObserver;
+use Laminas\Json\Json;
 
 /**
  * Class EmailOrderSetTemplateVarsBefore
@@ -30,7 +31,7 @@ class EmailOrderSetTemplateVarsBefore implements ObserverInterface
             return;
         }
         try {
-            $locationData = \Laminas\Json\Json::decode($order->getShippingAdditionalInformation());
+            $locationData = Json::decode($order->getShippingAdditionalInformation(), Json::TYPE_ARRAY);
         } catch (\Exception $e) {
             return;
         }

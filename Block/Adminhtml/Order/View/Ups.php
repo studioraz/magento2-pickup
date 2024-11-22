@@ -7,6 +7,7 @@
 namespace SR\UpsShip\Block\Adminhtml\Order\View;
 
 use SR\UpsShip\Model\Carrier\UpsShip;
+use Laminas\Json\Json;
 
 /**
  * Class Ups
@@ -62,7 +63,7 @@ class Ups extends \Magento\Sales\Block\Adminhtml\Order\AbstractOrder
     public function getUpsLocationDetails($asArray = true)
     {
         try {
-            $details = \Laminas\Json\Json::decode($this->getOrder()->getShippingAdditionalInformation());
+            $details = Json::decode($this->getOrder()->getShippingAdditionalInformation(), Json::TYPE_ARRAY);
             foreach(array('lat', 'lng', 'dist', 'iid') as $skip) {
                 unset($details[$skip]);
             }
