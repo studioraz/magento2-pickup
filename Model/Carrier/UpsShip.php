@@ -8,12 +8,13 @@ namespace SR\UpsShip\Model\Carrier;
 
 use Magento\Quote\Model\Quote\Address\RateRequest;
 use Magento\Shipping\Model\Rate\Result;
+use Magento\Shipping\Model\Carrier\AbstractCarrier;
 
 /**
  * Class UpsShip
  * @package SR\UpsShip\Model\Carrier
  */
-class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline implements
+class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
     \Magento\Shipping\Model\Carrier\CarrierInterface
 {
     const CARRIER_CONFIG_USE_TABLERATE = 'use_tablerate';
@@ -45,17 +46,7 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         \Magento\Shipping\Model\Rate\ResultFactory $rateResultFactory,
         \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-        \Magento\Framework\Xml\Security $xmlSecurity,
-        \Magento\Shipping\Model\Simplexml\ElementFactory $xmlElFactory,
-        \Magento\Shipping\Model\Rate\ResultFactory $rateFactory,
         \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory,
-        \Magento\Shipping\Model\Tracking\Result\ErrorFactory $trackErrorFactory,
-        \Magento\Shipping\Model\Tracking\Result\StatusFactory $trackStatusFactory,
-        \Magento\Directory\Model\RegionFactory $regionFactory,
-        \Magento\Directory\Model\CountryFactory $countryFactory,
-        \Magento\Directory\Model\CurrencyFactory $currencyFactory,
-        \Magento\Directory\Helper\Data $directoryData,
-        \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
         \Magento\Shipping\Model\CarrierFactory $carrierFactory,
         array $data = []
     ) {
@@ -65,21 +56,9 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         $this->carrierFactory = $carrierFactory;
         parent::__construct(
             $scopeConfig,
-            $rateErrorFactory,
-            $logger,
-            $xmlSecurity,
-            $xmlElFactory,
-            $rateFactory,
-            $rateMethodFactory,
-            $trackFactory,
-            $trackErrorFactory,
-            $trackStatusFactory,
-            $regionFactory,
-            $countryFactory,
-            $currencyFactory,
-            $directoryData,
-            $stockRegistry,
-            $data
+        $rateErrorFactory,
+        $logger,
+        $data
         );
     }
 
@@ -146,7 +125,7 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrierOnline impl
         }
 
         $subtractAmount = (float)$this->getConfigData(self::CARRIER_CONFIG_SUBTRACT_AMOUNT);
-        
+
         $subtractAmount = $subtractAmount ? $subtractAmount : 0;
 
         $tablerateCarrierType = 'tablerate';
