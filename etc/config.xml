@@ -6,6 +6,7 @@
                 <active>1</active>
                 <model>SR\UpsShip\Model\Carrier\UpsShip</model>
                 <title>PickUP Ship</title>
+                <name>PickUP Ship</name>
                 <price>10.00</price>
                 <!--<sallowspecific>1</sallowspecific>-->
                 <!--<specificcountry>IL</specificcountry>-->
