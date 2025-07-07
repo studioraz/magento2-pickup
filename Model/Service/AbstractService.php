@@ -14,6 +14,13 @@ abstract class AbstractService
 {
     const AUTH_COOKIE_NAME = '.ASPXFORMSAUTH';
 
+    protected $scopeConfig;
+    protected $client;
+    protected $message;
+    protected $logger;
+    protected $urlPrefix;
+    protected $entity;
+
     public function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \SR\UpsShip\Model\Client $client,

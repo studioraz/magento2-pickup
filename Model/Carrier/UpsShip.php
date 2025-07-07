@@ -31,6 +31,8 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
      * @var \Magento\Shipping\Model\CarrierFactory
      */
     protected $carrierFactory;
+    protected $_trackFactory;
+    protected $_trackErrorFactory;
 
     /**
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
@@ -48,12 +50,16 @@ class UpsShip extends \Magento\Shipping\Model\Carrier\AbstractCarrier implements
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Shipping\Model\Tracking\ResultFactory $trackFactory,
         \Magento\Shipping\Model\CarrierFactory $carrierFactory,
+        \Magento\Shipping\Model\Order\TrackFactory $_trackFactory,
+        \Magento\Shipping\Model\Tracking\Result\ErrorFactory $_trackErrorFactory,
         array $data = []
     ) {
         $this->_rateResultFactory = $rateResultFactory;
         $this->_trackingResultFactory = $trackFactory;
         $this->_rateMethodFactory = $rateMethodFactory;
         $this->carrierFactory = $carrierFactory;
+        $this->_trackFactory = $_trackFactory;
+        $this->_trackErrorFactory = $_trackErrorFactory;
         parent::__construct(
             $scopeConfig,
         $rateErrorFactory,

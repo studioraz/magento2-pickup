@@ -14,10 +14,11 @@ class Client
 {
     protected $_client;
 
+    protected $scopeConfig;
+
     public function __construct(
         \Magento\Framework\App\Helper\Context $context
-    )
-    {
+    ) {
         $this->scopeConfig = $context->getScopeConfig();
     }
 
