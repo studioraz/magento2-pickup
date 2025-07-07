@@ -13,12 +13,16 @@ namespace SR\UpsShip\Block\Paypal\Review;
  */
 class UpsShip extends \Magento\Framework\View\Element\Template
 {
+
+    protected $quote;
+    protected $configProvider;
+
     public function __construct(
         \Magento\Checkout\Model\Session $checkoutSession,
         \Magento\Checkout\Model\CompositeConfigProvider $configProvider,
         \Magento\Framework\View\Element\Template\Context $context,
-        array $data)
-    {
+        array $data
+    ) {
         $this->quote = $checkoutSession->getQuote();
         $this->configProvider = $configProvider;
         parent::__construct($context, $data);

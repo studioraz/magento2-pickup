@@ -15,13 +15,18 @@ use Magento\Framework\Event\Observer as EventObserver;
  */
 class SalesOrderShipmentSaveBefore implements ObserverInterface
 {
+
+    protected $service;
+    protected $trackFactory;
+    protected $upsShipCarrier;
+    protected $messageManager;
+
     public function __construct(
         \SR\UpsShip\Model\Service\InsertPickupsShipment $service,
         \Magento\Sales\Model\Order\Shipment\TrackFactory $trackFactory,
         \SR\UpsShip\Model\Carrier\UpsShip $upsShipCarrier,
         \Magento\Framework\Message\Manager $manager
-    )
-    {
+    ) {
         $this->service = $service;
         $this->trackFactory = $trackFactory;
         $this->upsShipCarrier = $upsShipCarrier;
